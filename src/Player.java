@@ -78,6 +78,7 @@ public void processReply(int count)
 public int commonCount(String a,String b)
 {
 	int commonCount=0;
+    a=removeDuplicateCharacters(a);
 	for(int i=0;i<a.length();i++)
 	{
 		if(b.contains(Character.toString(a.charAt(i))))
@@ -85,7 +86,18 @@ public int commonCount(String a,String b)
 	}
 	return commonCount;
 }
-
+public String removeDuplicateCharacters(String a)
+{
+	String distinctChars="";
+	HashSet<Character> hs=new HashSet<Character>();
+	for(int i=0;i<a.length();i++)
+		hs.add(a.charAt(i));
+	for(char ch:hs)
+	{
+		distinctChars=distinctChars+Character.toString(ch);
+	}
+	return distinctChars;
+}
 public int respondToGuess(String guess) {
     int commonLetters = 0;
     for(int i = 0; i < guess.length(); i++) 
