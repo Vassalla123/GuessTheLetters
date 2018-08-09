@@ -1,18 +1,23 @@
 import java.io.*;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
 
 
 public class Game {
-	int level;
+	String level;
 	Player computer;
 	Player human;
-	public Game(int level) throws IOException
+	HashMap<String,Integer> valueOfLevel=new HashMap<String,Integer>();
+	public Game(String level) throws IOException
 	{
+		valueOfLevel.put("EASY", 4);
+		valueOfLevel.put("MEDIUM", 5);
+		valueOfLevel.put("DIFFICULT",6);
 		this.level = level;
-		computer = new Player("FRIG",level);
-		human = new Player("FOUR",level);
+		computer = new Player("FRIG",valueOfLevel.get(level));
+		human = new Player("FOUR",valueOfLevel.get(level));
 	}
 	
 	public void startGame() {
@@ -24,7 +29,7 @@ public class Game {
 			String computerGuess=computer.guessNextWord();
 			System.out.println(computer.mappedWord(computerGuess));
 			noOfCommonLetters = human.commonCount(computerGuess,human.secretword);
-				if(noOfCommonLetters == level) {
+				if(noOfCommonLetters == valueOfLevel.get(level)) {
 				System.out.println("computer wins!");
 				break;
 			}
@@ -35,7 +40,7 @@ public class Game {
 			String guess=s.nextLine();
 			noOfCommonLetters = computer.commonCount(guess,computer.secretword);
 			System.out.println("common letters of player's guess with computer's secret word "+noOfCommonLetters);
-			if(noOfCommonLetters == level){
+			if(noOfCommonLetters == valueOfLevel.get(level)){
 				System.out.println("human wins!");
 				break;
 			}
@@ -47,7 +52,7 @@ public class Game {
 	}
 
 	public static void main(String args[]) throws IOException {
-		Game g = new Game(4);
+		Game g = new Game("EASY");
 		g.startGame();
 		
 		

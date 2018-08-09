@@ -14,7 +14,6 @@ String secretword;
 String guessedWord;
 HashMap<String,String> anagram;
 ArrayList<String> probableWords=new ArrayList<String>();
-ArrayList<String> possibleWords;
 public Player(String secretword,int level) throws IOException
 {
 	this.secretword=secretword;
@@ -54,22 +53,11 @@ public void preprocess(int level) throws IOException
 	  {
 		  probableWords.add(s);
 	  }
-// int i=0;
-//	  for(String s:hs)
-//	  {
-//		  System.out.println(s);
-//		  i++;
-//	  }
 	
 }
-//public String generateNextWord(int commonLetters)
-//{
-//		
-//}
 public String guessNextWord()
 {
 	Random random = new Random();
-	//System.out.println(this.guessedWord+" "+probableWords.size());
 	int randomIndex=random.nextInt(probableWords.size());
 	
 	this.guessedWord=probableWords.get(randomIndex);
@@ -77,13 +65,14 @@ public String guessNextWord()
 }
 public void processReply(int count)
 {
-	possibleWords=new ArrayList<String>();
+	ArrayList<String> possibleWords=new ArrayList<String>();
 	for(String s:probableWords)
 	{
 		if(s!=this.guessedWord && commonCount(this.guessedWord, s)==count)
 		possibleWords.add(s);
 	}
-	probableWords=possibleWords;
+	probableWords=new ArrayList<String>();
+	probableWords.addAll(possibleWords);
 	
 }
 public int commonCount(String a,String b)
