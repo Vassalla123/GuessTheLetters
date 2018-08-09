@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Game {
 	String level;
 	Player computer;
-	Player human;
+	Human human;
 	HashMap<String,Integer> valueOfLevel=new HashMap<String,Integer>();
 	public Game(String level) throws IOException
 	{
@@ -17,7 +17,7 @@ public class Game {
 		valueOfLevel.put("DIFFICULT",6);
 		this.level = level;
 		computer = new Player("FRIG",valueOfLevel.get(level));
-		human = new Player("FOUR",valueOfLevel.get(level));
+		human = new Human("FOUR",valueOfLevel.get(level));
 	}
 	
 	public void startGame() {
@@ -28,7 +28,7 @@ public class Game {
 			turns++;
 			String computerGuess=computer.guessNextWord();
 			System.out.println(computer.mappedWord(computerGuess));
-			noOfCommonLetters = human.commonCount(computerGuess,human.secretword);
+			noOfCommonLetters = human.commonCount(human.secretword,computerGuess);
 				if(noOfCommonLetters == valueOfLevel.get(level)) {
 				System.out.println("computer wins!");
 				break;
@@ -38,7 +38,8 @@ public class Game {
 			
 			//noOfCommonLetters = A.commonCount(B.guessNextWord(),A.secretword);
 			String guess=s.nextLine();
-			noOfCommonLetters = computer.commonCount(guess,computer.secretword);
+			human.setGuessedWord(guess);
+			noOfCommonLetters = computer.commonCount(computer.secretword,guess);
 			System.out.println("common letters of player's guess with computer's secret word "+noOfCommonLetters);
 			if(noOfCommonLetters == valueOfLevel.get(level)){
 				System.out.println("human wins!");
